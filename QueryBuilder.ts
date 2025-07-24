@@ -3,6 +3,7 @@ import { FilterQuery, Query } from 'mongoose';
 class QueryBuilder<T> {
   public modelQuery: Query<T[], T>;
   public query: Record<string, unknown>;
+  public paginationMeta: { page: number; limit: number; skip: number } = { page: 1, limit: 10, skip: 0 };
 
   constructor(modelQuery: Query<T[], T>, query: Record<string, unknown>) {
     this.modelQuery = modelQuery;
@@ -52,6 +53,11 @@ class QueryBuilder<T> {
 
     this.modelQuery = this.modelQuery.skip(skip).limit(limit);
 
+    this.paginationMeta = {
+      page,
+      limit,
+      skip,
+    }
     return this;
   }
 
@@ -66,12 +72,12 @@ class QueryBuilder<T> {
     const totalQueries = this.modelQuery.getFilter();
     const total = await this.modelQuery.model.countDocuments(totalQueries);
     const page = Number(this?.query?.page) || 1;
-    const limit = Number(this?.query?.limit) || 10;
-    const totalPage = Math.ceil(total / limit);
+    const limit = Number(this?.query?.limit) || 5;
+    const totalPage = Math.ceil(total / this.paginationMeta.limit);
 
     return {
       page,
-      limit,
+       limit,
       total,
       totalPage,
     };
