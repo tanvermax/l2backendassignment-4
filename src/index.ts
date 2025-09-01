@@ -35,7 +35,12 @@ const Book = mongoose.model("Book", bookSchema);
 const Borrow = mongoose.model("Borrow", borrowSchema);
 
 app.use(express.json());
-app.use(cors({ origin: "https://assignment-frontend-4-g11q.vercel.app" }));
+app.use(cors({
+  origin: ["https://assignment-frontend-4-g11q.vercel.app",
+    "https://library-frontend-lemon-nu.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 
 
