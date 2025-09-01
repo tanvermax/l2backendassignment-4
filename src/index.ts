@@ -10,7 +10,7 @@ mongoose.connect("mongodb+srv://todoapp:todoapp@cluster0.toqnk.mongodb.net/?retr
 
 
 app.get("/", (req: any, res: any) => {
-  res.send("hellp")
+  res.send("hello ")
 })
 
 
@@ -35,7 +35,7 @@ const Book = mongoose.model("Book", bookSchema);
 const Borrow = mongoose.model("Borrow", borrowSchema);
 
 app.use(express.json());
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: "https://assignment-frontend-4-g11q.vercel.app" }));
 
 
 
